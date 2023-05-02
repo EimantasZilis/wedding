@@ -1,0 +1,33 @@
+version: "3.9"
+   
+services:
+  webapp:
+    image: ${APP_REGISTRY}/${APP_IMAGE}:${APP_TAG}
+    container_name: webapp
+    command: python migrate && python manage.py runserver 0.0.0.0:8000
+    env_file: 
+      - .env.local
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./basic_app:/basic_app
+    depends_on:
+      - postgres
+ 
+  postgres:
+    image: postgres:13.3
+    container_name: postgres
+    restart: always
+    volumes:
+      - postgres:/var/lib/postgresql
+    environment:
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD not set}
+      POSTGRES_USER: ${POSTGRES_USERNAME:?POSTGRES_USERNAME not set}
+      POSTGRES_DB: ${POSTGRES_DATABASE:?POSTGRES_DATABASE not set}
+      POSTGRES_INITDB_ARGS: "--encoding='UTF-8'"
+    expose:
+      - ${POSTGRES_PORT:?POSTGRES_PORT not set}
+
+volumes:
+  postgres:
+    
