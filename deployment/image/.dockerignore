@@ -1,3 +1,6 @@
-environment.yml
+deployment/*
+screenshots/*
+
 .env.local
-docker_deployment/*
+docker-compose.dev.yml
+environment.yml

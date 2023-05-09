@@ -1,9 +1,9 @@
 version: "3.9"
    
 services:
-  webapp:
+  wedding-webapp:
     image: $APP_REGISTRY/$APP_IMAGE:$APP_TAG
-    container_name: webapp
+    container_name: wedding-webapp
     pull_policy: always
     command: gunicorn basic_app.wsgi:application --bind 0.0.0.0:8000
     env_file: 
@@ -12,14 +12,14 @@ services:
     ports:
       - "8000:8000"
     depends_on:
-      - postgres
+      - wedding-postgres
 
-  postgres:
+  wedding-postgres:
     image: postgres:13.3
-    container_name: postgres
+    container_name: wedding-postgres
     restart: always
     volumes:
-      - postgres:/var/lib/postgresql
+      - wedding-postgres:/var/lib/postgresql
     environment:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD not set}
       POSTGRES_USER: ${POSTGRES_USERNAME:?POSTGRES_USERNAME not set}
@@ -29,5 +29,5 @@ services:
       - ${POSTGRES_PORT:?POSTGRES_PORT not set}
 
 volumes:
-  postgres:
+  wedding-postgres:
     

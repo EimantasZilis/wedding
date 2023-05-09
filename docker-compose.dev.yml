@@ -1,23 +1,23 @@
 version: "3.9"
    
 services:
-  webapp:
+  wedding-webapp:
     image: ${APP_REGISTRY}/${APP_IMAGE}:${APP_TAG}
-    container_name: webapp
-    command: python migrate && python manage.py runserver 0.0.0.0:8000
+    container_name: wedding-webapp
+    command: python manage.py runserver 0.0.0.0:8000
     env_file: 
       - .env.local
     ports:
       - "8000:8000"
     volumes:
-      - ./basic_app:/basic_app
+      - ./application:/application
     depends_on:
       - postgres
  
   postgres:
     image: postgres:13.3
-    container_name: postgres
     restart: always
+    container_name: postgres
     volumes:
       - postgres:/var/lib/postgresql
     environment:
@@ -30,4 +30,3 @@ services:
 
 volumes:
   postgres:
-    

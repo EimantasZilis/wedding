@@ -19,8 +19,8 @@ ENV PYTHONUNBUFFERED 1
 
 
 WORKDIR ${USER_DIRECTORY}
-COPY docker_deployment/image/entrypoint.sh ${USER_DIRECTORY}
-COPY docker_deployment/image/requirements.txt ${USER_DIRECTORY}
+COPY deployment/image/entrypoint.sh ${USER_DIRECTORY}
+COPY deployment/image/requirements.txt ${USER_DIRECTORY}
 
 # Install dependencies
 RUN pip install --upgrade pip
@@ -28,7 +28,7 @@ RUN pip install -r requirements.txt
 
 FROM base-stage AS final-stage
 
-COPY --chown=${APP_USER}:${APP_USER} basic_app basic_app
+COPY --chown=${APP_USER}:${APP_USER} application application
 
 USER ${APP_USER}:${APP_USER}
 
